@@ -52,9 +52,36 @@ public class Main {
     }
 
     private static void check(Expr expr, int expected) {
-        int actual; // FILL THIS!
+        int actual = expr.accept(evaluator); // FILL THIS!
         testNumber++;
         System.out.println("Test " + testNumber + " = " + actual);
         assert actual == expected : "Test " + testNumber + ": expected " + expected + ", got " + actual;
     }
+
+    private static final Expr.Visitor<Integer> evaluator = new Expr.Visitor<Integer>() {
+       @Override 
+       public Integer visitNum(Num num) {
+           return num.getValue();
+       }
+
+       @Override 
+         public Integer visitAdd(Add add) {
+              return add.getLeft().accept(this) + add.getRight().accept(this);
+         }
+
+        @Override
+            public Integer visitSub(Sub sub) {
+                return sub.getLeft().accept(this) - sub.getRight().accept(this);
+            }
+        
+        @Override
+            public Integer visitMult(Mult mult) {
+                return mult.getLeft().accept(this) * mult.getRight().accept(this);
+            }
+
+        @Override
+            public Integer visitDiv(Div div) {
+                return div.getLeft().accept(this) / div.getRight().accept(this);
+            }
+    };
 }
