@@ -5,8 +5,13 @@
 
 class Configuration {
 public:
+    static Configuration& getInstance();
+    Configuration(const Configuration&) = delete;
+    Configuration& operator=(const Configuration&) = delete;
+        
 
 private:
+    Configuration();
 
     std::string appName;
     std::string logLevel;
