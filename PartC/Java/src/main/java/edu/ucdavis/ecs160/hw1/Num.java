@@ -1,6 +1,6 @@
 package edu.ucdavis.ecs160.hw1;
 
-public class Num implements Expr {
+public final class Num implements Expr {
     private final int value;
 
     public Num(int value) {
@@ -10,4 +10,8 @@ public class Num implements Expr {
     public int getValue() {
         return value;
     }
+
+    @Override
+    public <T> T accept(Visitor<T> visitor) {
+        return visitor.visitNum(this);}
 }
